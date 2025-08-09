@@ -1,14 +1,4 @@
-[package]
-name = "sac13"
-version = "0.0.1"
-edition = "2024"
-description = "The reference implementation for the SAC13 calendar system."
-license = "Unlicense"
-homepage = "https://sac13.net"
-repository = "https://github.com/SAC-Thirteen/sac13.rs"
-readme = "README.md"
-# "embedded", "no-std::no-alloc", "no-std", "wasm" category? Test and implement no-std first
-categories = ["date-and-time"]
-keywords = ["sac13", "calendar"]
+[workspace]
+resolver = "2"
 
-[dependencies]
+members = ["sac13"]
