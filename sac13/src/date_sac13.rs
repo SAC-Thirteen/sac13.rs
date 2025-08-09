@@ -3,7 +3,7 @@ pub mod raw_date;
 use core::fmt::Display;
 
 use crate::{month::Month, scalars::Year, traits::CalendarDate};
-use raw_date::{date_to_yo, yo_to_date, YearOrdinal};
+use raw_date::{YearOrdinal, date_to_yo, yo_to_date};
 
 /// SAC13 date.
 ///
@@ -17,8 +17,6 @@ use raw_date::{date_to_yo, yo_to_date, YearOrdinal};
 ///
 /// // Hard-coded values can be constructed with a compile-time checked macro.
 /// let date = date!(M024 - 03 - 12);
-///
-/// // TODO: other ctors
 /// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Date {
@@ -147,7 +145,6 @@ impl CalendarDate for Date {
         Some(yo_to_date(YearOrdinal::from_julian(value)?))
     }
 
-    #[must_use]
     fn tomorrow(mut self) -> Option<Self> {
         // Note: the implementation should be simple,
         // and almost trivial to show its correctness,
@@ -175,7 +172,6 @@ impl CalendarDate for Date {
         Some(self)
     }
 
-    #[must_use]
     fn yesterday(mut self) -> Option<Self> {
         // Note: the implementation should be simple,
         // and almost trivial to show its correctness,

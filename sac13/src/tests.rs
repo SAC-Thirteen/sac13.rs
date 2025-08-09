@@ -1,4 +1,4 @@
-#![cfg(test)]
+use std::prelude::rust_2024::*;
 
 use crate::prelude::*;
 
@@ -54,6 +54,46 @@ fn exhaustive_day_conversion_check() {
             assert_eq!(greg, GregorianDate::MAX, "JD: {}", j);
         }
     }
+}
+
+#[test]
+pub fn const_year_num_is_same_as_during_construction() {
+    assert_eq!(year!(B000).value(), 1000);
+}
+
+#[test]
+pub fn const_date_construction_works() {}
+
+#[test]
+pub fn greg_from_sac13_works() {
+    let result: GregorianDate = date!(M000 - 01 - 01).convert();
+
+    assert_eq!(result, date_greg!(2000 - 03 - 20));
+}
+
+#[test]
+pub fn sac13_from_greg_works() {
+    let result: Date = date_greg!(2000 - 03 - 20).convert();
+    assert_eq!(result, date!(M000 - 01 - 01));
+}
+
+#[test]
+fn snapshot_all_leap_years() {
+    let mut y = Year::MIN;
+    let mut leap_years = vec![];
+
+    loop {
+        if y.is_leap() {
+            leap_years.push(format!("{y}").to_string());
+        }
+
+        match y.next() {
+            Some(new_y) => y = new_y,
+            None => break,
+        };
+    }
+
+    insta::assert_yaml_snapshot!(leap_years);
 }
 
 // #[test]

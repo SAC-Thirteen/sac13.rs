@@ -225,7 +225,6 @@ impl CalendarDate for GregorianDate {
         })
     }
 
-    #[must_use]
     fn tomorrow(mut self) -> Option<Self> {
         // Note: the implementation should be simple,
         // and almost trivial to show its correctness,
@@ -253,7 +252,6 @@ impl CalendarDate for GregorianDate {
         self.limit_sac13()
     }
 
-    #[must_use]
     fn yesterday(mut self) -> Option<Self> {
         // Note: the implementation should be simple,
         // and almost trivial to show its correctness,

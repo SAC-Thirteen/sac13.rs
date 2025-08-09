@@ -52,7 +52,7 @@ impl Weekday {
 
     /// The international (english) three letter abbreviation for the day of the week.
     ///
-    /// Mon, Tue, Wed, Thu, Fri, Sat, Sun, Syn
+    /// Mon, Tue, Wed, Thu, Fri, Sat, Sun
     #[must_use]
     pub const fn name_abr3(self) -> &'static str {
         use Weekday::*;
@@ -98,12 +98,6 @@ impl Weekday {
             Saturday => Friday,
             Sunday => Saturday,
         }
-    }
-
-    /// The underlying value.
-    #[must_use]
-    pub const fn value(self) -> u8 {
-        self as u8
     }
 }
 

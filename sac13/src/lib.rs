@@ -1,4 +1,9 @@
-#![doc = include_str!("../README.md")]
+//! SAC13 is a thirteen-month solar calendar in which every month
+//! has the same four-week layout (28 days*) and this library is
+//! the Rust reference implementation.
+//!
+//! https://sac13.net
+
 #![no_std]
 // #![cfg_attr(not(test), no_std)]
 
@@ -12,6 +17,10 @@
     // clippy::cargo
 )]
 #![warn(clippy::trivially_copy_pass_by_ref)]
+
+#[cfg(any(test, feature = "std"))]
+#[macro_use]
+extern crate std;
 
 // TODO: features: serde, std, alloc, macros, formatting, wasm?, chrono, time
 // TODO: maybe more const?
@@ -146,10 +155,13 @@ pub enum YearType {
 mod date_gregorian;
 mod date_sac13;
 mod epoch_day;
-mod misc;
 mod month;
 mod parse;
 mod scalars;
+
+#[cfg(all(test, feature = "std"))]
+mod tests;
+
 mod traits;
 mod weekday;
 
@@ -161,10 +173,10 @@ pub mod day_counts {
     pub use crate::scalars::{CycleEpochDay, JulianDay, Sac13Day, UnixDay};
 }
 
-pub use parse::parse_date_str;
 pub use parse::ComponentOrder;
 pub use parse::GregorianOrSac13;
 pub use parse::ParsedDate;
+pub use parse::parse_date_str;
 
 pub use date_gregorian::GregorianDate;
 pub use date_sac13::Date;
@@ -172,29 +184,3 @@ pub use scalars::Year;
 pub use traits::CalendarDate;
 
 pub use month::Month;
-
-#[cfg(test)]
-mod tests {
-    use crate::{prelude::*, scalars::JulianDay};
-
-    #[test]
-    pub fn const_year_num_is_same_as_during_construction() {
-        assert_eq!(year!(B000).value(), 1000);
-    }
-
-    #[test]
-    pub fn const_date_construction_works() {}
-
-    #[test]
-    pub fn greg_from_sac13_works() {
-        let result: GregorianDate = date!(M000 - 01 - 01).convert();
-
-        assert_eq!(result, date_greg!(2000 - 03 - 20));
-    }
-
-    #[test]
-    pub fn sac13_from_greg_works() {
-        let result: Date = date_greg!(2000 - 03 - 20).convert();
-        assert_eq!(result, date!(M000 - 01 - 01));
-    }
-}
